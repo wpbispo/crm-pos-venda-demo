@@ -1,0 +1,188 @@
+/* ==========================================================
+   CRM Fonte Clara — visual novo (14/10/2026)
+   Vem DEPOIS do estilo.css e só sobrescreve. Para voltar ao visual
+   antigo basta apagar a linha do visual-novo.css no index.html
+   (ou restaurar a pasta versao-anterior-2026-10-14).
+   Inspiração: quadro por etapa (Pipedrive) + acabamento limpo (Attio).
+   ========================================================== */
+:root{
+  --f-d:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-b:'Figtree','Segoe UI',-apple-system,system-ui,sans-serif;
+  --brand-s:#e6f2fb;
+}
+html[data-tema="escuro"]{--brand-s:#12293b}
+body{font-family:var(--f-b);font-size:15px}
+
+/* ---------- barra lateral: ícones desenhados (a barra clara já vem do estilo.css) ---------- */
+.nav button .ic{display:grid;place-items:center;color:currentColor}
+.nav button .ic svg{width:18px;height:18px}
+.marcatx b{font-family:var(--f-d);font-size:16px}
+
+/* ---------- topo ---------- */
+.topo h2{font-family:var(--f-d);font-size:24px;font-weight:700;letter-spacing:-.015em}
+.busca{background:var(--card);border-color:var(--line);border-radius:11px;box-shadow:var(--sh-1)}
+.bt{border-radius:10px;box-shadow:var(--sh-1)}
+
+/* ---------- resumo do dia: 5 blocos ---------- */
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;padding:12px 1px 4px;max-height:220px}
+.kpi{flex-direction:column;align-items:flex-start;gap:1px;border-radius:12px;padding:11px 15px 10px;box-shadow:var(--sh-1);text-align:left}
+.kpi .v{font-family:var(--f-d);font-size:30px;font-weight:700;line-height:1.1}
+.kpi .l{font-size:12.5px;font-weight:500}
+.kpi.on{background:var(--brand-s)}
+
+/* ---------- troca quadro / lista ---------- */
+.vbar{display:flex;align-items:center;gap:10px;margin:0 0 10px}
+.seg{display:inline-flex;background:var(--mini-b);border-radius:11px;padding:3px}
+.seg button{padding:6px 16px;border-radius:9px;font-size:13px;font-weight:650;color:var(--mut);transition:.15s}
+.seg button:hover{color:var(--ink)}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--sh-1)}
+
+/* ---------- cartões (lista e quadro) ---------- */
+.linha{border-radius:12px}
+.quem b{font-weight:650}
+.bcp{flex:none;font-size:12.5px;font-weight:620;padding:7px 10px;border-radius:9px;border:1px solid var(--line-2);color:var(--mut);transition:.16s var(--ease)}
+.bcp:hover{border-color:var(--brand);color:var(--brand);transform:translateY(-1px)}
+.bcp span{display:none}
+.bcp.ok{border-color:var(--ok-l);background:var(--ok-b);color:var(--ok)}
+
+/* ---------- quadro por etapa ---------- */
+.qgrade{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(330px,1fr);gap:12px;overflow-x:auto;align-items:start;padding-bottom:14px}
+.qcol{background:var(--mini-b);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0;transition:background .15s}
+.qcol.alvo{background:var(--brand-s);outline:2px dashed var(--brand);outline-offset:-2px}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 4px 2px}
+.qhead i{width:9px;height:9px;border-radius:50%;background:var(--c);flex:none}
+.qhead h3{font-family:var(--f-d);font-size:14.5px;font-weight:700;letter-spacing:-.005em}
+.qn{margin-left:auto;font-size:12px;font-weight:650;color:var(--mut);background:var(--card);border-radius:var(--r-p);padding:1px 10px;font-variant-numeric:tabular-nums}
+.qhead p{width:100%;font-size:11.5px;color:var(--fnt)}
+.qcards{display:flex;flex-direction:column;gap:8px}
+.qvazio{font-size:12.5px;color:var(--fnt);text-align:center;padding:24px 8px;border:1px dashed var(--line-2);border-radius:10px}
+.qmais{padding:9px;border:1px dashed var(--line-2);border-radius:10px;color:var(--mut);font-weight:600;font-size:12.5px}
+.qmais:hover{border-color:var(--brand);color:var(--brand)}
+
+.modo-quadro .linha{margin:0;box-shadow:var(--sh-1)}
+.modo-quadro .cab{display:grid;grid-template-columns:16px minmax(0,1fr) 12px;grid-template-areas:"pg qm st" "tg tg tg" "bt bt bt";gap:8px 6px;padding:12px;align-items:start}
+.modo-quadro .pino{display:none}
+.modo-quadro .pegar{grid-area:pg;padding:2px 0}
+.modo-quadro .quem{grid-area:qm;flex:none;min-width:0}
+.modo-quadro .quem b{white-space:normal;font-size:14.5px;line-height:1.25}
+.modo-quadro .quem span{white-space:normal;line-height:1.35}
+.modo-quadro .quem small.ult{display:block;margin-top:4px}
+.modo-quadro .seta{grid-area:st;padding-top:4px}
+.modo-quadro .tags{grid-area:tg;display:flex;flex-wrap:wrap;gap:5px;align-items:center;justify-content:flex-start;margin-left:0}
+.modo-quadro .bts{grid-area:bt;display:flex;flex-wrap:wrap;gap:6px;align-items:stretch;min-width:0}
+.modo-quadro .bts .zap{flex:1;justify-content:center;white-space:nowrap}
+.modo-quadro .bts .bag{opacity:1;pointer-events:auto}
+.modo-quadro .bts .bag span{display:none}
+.modo-quadro .detgrade{grid-template-columns:1fr;gap:16px}
+.modo-quadro .campos{grid-template-columns:1fr 1fr}
+
+@media(max-width:1180px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.qgrade{grid-auto-columns:86%}.topo{position:static}.topo h2{font-size:20px}
+  .kpis{display:flex;overflow-x:auto;gap:8px}.kpi{flex:0 0 138px}.kpi .v{font-size:26px}}
+
+/* ==========================================================
+   COMPACTO (14/10/2026) — cabe mais na tela sem precisar de Ctrl e -
+   Letras, espaços e a barra lateral ficam menores; o topo deixa de
+   acompanhar a rolagem para não roubar altura.
+   ========================================================== */
+:root{--side:204px}
+body{font-size:13.5px}
+.side{padding:12px 9px 10px;gap:3px}
+.marca{padding:0 4px 8px;gap:9px}
+.marca .avatar{width:42px;height:42px}
+.marcatx b{font-size:14.5px}
+.marcatx span{font-size:11px}
+.navrot{padding:5px 9px 3px;font-size:9.5px}
+.nav button{padding:6px 9px;font-size:13px;gap:9px}
+.nav button .ic svg{width:16px;height:16px}
+.nav .qt{padding:1px 7px;font-size:10.5px}
+.sidefim{gap:5px;padding-top:8px}
+.sb{padding:6px 9px;font-size:12px;gap:7px}
+.sbdupla .sb{padding:5px 4px;font-size:11.5px}
+.bkpauto{font-size:10.5px;padding:0 3px}
+.sidenota{font-size:10px;padding:3px 2px 0;line-height:1.35}
+
+.topo{position:static;padding:8px 18px 6px;backdrop-filter:none}
+.topolinha{gap:9px}
+.topo h2{font-size:20px}
+.topo .topodata{font-size:11.5px}
+.busca{flex:1 1 220px;min-width:170px;border-radius:9px}
+.busca input{padding:6px 0;font-size:13px}
+.bt{padding:6px 10px;font-size:12px;border-radius:9px}
+.bt.so-ic{padding:6px 9px}
+
+.kpis{gap:7px;padding:8px 1px 2px}
+.kpi{flex-direction:row;align-items:baseline;gap:8px;padding:6px 12px;border-radius:10px}
+.kpi .v{font-size:21px}
+.kpi .l{font-size:12px}
+
+.corpo{padding:8px 18px 40px}
+.avisos{gap:6px;margin-bottom:8px}
+.alerta{padding:7px 11px}
+.vbar{margin:0 0 7px}
+.seg{border-radius:9px;padding:2px}
+.seg button{padding:4px 13px;font-size:12px;border-radius:7px}
+.filtros{margin-bottom:7px}
+.filtros>summary{padding:6px 12px;font-size:12px}
+.conta{margin:0 2px 6px;font-size:12px}
+
+.qgrade{grid-auto-columns:minmax(292px,1fr);gap:9px;padding-bottom:8px}
+.qcol{padding:7px;gap:6px;border-radius:12px}
+.qhead{padding:2px 3px 0;gap:6px}
+.qhead h3{font-size:13.5px}
+.qhead p{display:none}
+.qn{font-size:11px;padding:0 8px}
+.qcards{gap:6px}
+.modo-quadro .cab{padding:8px 9px;gap:5px 5px}
+.modo-quadro .quem b{font-size:13.5px}
+.modo-quadro .quem span{font-size:12px}
+.modo-quadro .quem small.ult{font-size:11.5px;margin-top:2px}
+.modo-quadro .bts{gap:5px}
+.modo-quadro .bts .zap,.modo-quadro .bts .breg,.modo-quadro .bts .bag,.modo-quadro .bcp{padding:5px 8px;font-size:12px}
+.modo-quadro .tags .selo{font-size:10.5px;padding:2px 8px}
+.modo-quadro .tags .mini{font-size:10px;padding:2px 7px}
+.detpad{padding:11px}
+
+.cab{padding:7px 12px;gap:10px}
+.pino{height:26px}
+.linha{margin-bottom:4px}
+.quem b{font-size:13.5px}
+.quem span{font-size:12px}
+.quem small.ult{font-size:11.5px;margin-top:1px}
+.bag,.breg,.zap,.bcp{padding:5px 10px;font-size:12px}
+
+@media(max-width:1180px){.kpis{grid-template-columns:repeat(5,minmax(0,1fr))}.kpi{flex-direction:column;gap:0}}
+@media(max-width:760px){.kpis{display:flex}.kpi{flex:0 0 120px}.kpi .v{font-size:22px}}
+
+/* ==========================================================
+   3 COLUNAS + JANELA DO CLIENTE (14/10/2026, tarde)
+   ========================================================== */
+.vista{animation:none!important}
+.qgrade{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-columns:auto;overflow:visible;gap:12px;padding-bottom:6px}
+.qcol{padding:9px;gap:7px}
+.qhead p{display:block;font-size:11px}
+.modo-quadro .cab{padding:9px 11px}
+.mini.t-etapa{background:var(--info-b);color:var(--info);font-weight:700}
+.qnota{margin:8px 2px 0;font-size:12px;color:var(--fnt)}
+
+/* janela por cima da tela: o .det do cartão aberto vira uma janela fixa */
+.com-janela.tem-pop::before{content:"";position:fixed;inset:0;background:var(--veu);backdrop-filter:blur(2px);z-index:44}
+.com-janela .linha{transform:none!important}
+.com-janela .linha.open{border-color:var(--brand);box-shadow:0 0 0 1.5px var(--brand)}
+.com-janela .linha.open .det{position:fixed;top:4vh;left:0;right:0;margin:0 auto;width:min(940px,94vw);max-height:92vh;overflow:auto;
+  display:block;background:var(--card);border:1px solid var(--line-2);border-radius:16px;box-shadow:var(--sh-3);z-index:45;
+  animation:modalIn .22s var(--ease) both}
+.com-janela .linha.open .det>.dentro{overflow:visible}
+.com-janela .linha.open .detpad{border-top:0;background:var(--card);padding:16px 22px 22px}
+.pophead{display:flex;align-items:flex-start;gap:12px;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.pophead b{font-family:var(--f-d);font-size:21px;line-height:1.2;display:block}
+.pophead span{color:var(--mut);font-size:13px}
+.popx{margin-left:auto;flex:none;width:34px;height:34px;border-radius:9px;border:1px solid var(--line-2);color:var(--mut);font-size:15px}
+.popx:hover{border-color:var(--bad);color:var(--bad)}
+.com-janela .linha.open .detgrade{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px}
+.com-janela .linha.open .campos{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+@media(max-width:900px){.com-janela .linha.open .detgrade{grid-template-columns:1fr}}
+@media(max-width:760px){
+  .qgrade{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:88%;overflow-x:auto}
+  .com-janela .linha.open .det{top:2vh;max-height:96vh}
+}
