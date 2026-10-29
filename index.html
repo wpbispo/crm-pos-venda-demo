@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CRM Fonte Clara (demonstração)</title>
+<link rel="icon" href="img/avatar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/estilo.css">
+<link rel="stylesheet" href="css/visual-novo.css">
+<script>
+/* aplica o tema antes de desenhar a página, para não piscar branco/escuro.
+   Sem escolha salva, segue o tema do Windows. */
+(function(){var t=null;try{t=localStorage.getItem('crm_demo_tema')}catch(e){}
+  if(t!=='claro'&&t!=='escuro')t=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'escuro':'claro';
+  document.documentElement.setAttribute('data-tema',t);})();
+</script>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= BARRA LATERAL ================= -->
+  <aside class="side">
+    <div class="marca">
+      <img class="avatar" src="img/avatar.png" alt="Fonte Clara Purificadores">
+      <div class="marcatx"><b>Fonte Clara</b><span>CRM da loja</span></div>
+    </div>
+
+    <div class="navrot">Trabalho do dia</div>
+    <nav class="nav" id="nav">
+      <button data-v="fila" class="on"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></span> Fila de hoje <span class="qt" id="q-fila">0</span></button>
+      <button data-v="servicos"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></span> Agendamentos <span class="qt" id="q-serv">0</span></button>
+      <button data-v="trocas"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-.6-.6-2.6z"/></svg></span> Trocas feitas <span class="qt" id="q-trocas">0</span></button>
+      <button data-v="agenda"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></span> Retornos <span class="qt" id="q-agenda">0</span></button>
+      <button data-v="painel"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span> Painel</button>
+      <button data-v="base"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span> Toda a base <span class="qt" id="q-base">0</span></button>
+    </nav>
+
+    <div class="sidefim">
+      <button class="sb cel" id="btnimpcel" title="Cole a mensagem que a lista do celular mandou"><span class="ic">📥</span> Trazer ligações do celular</button>
+      <button class="sb pri" id="btnupd"><span class="ic">⬆️</span> Atualizar clientes</button>
+      <div class="sbdupla">
+        <button class="sb" id="btnbkp" title="Baixa um arquivo com tudo que está marcado aqui">Salvar backup</button>
+        <button class="sb" id="btnrst" title="Lê de volta um arquivo de backup">Restaurar</button>
+      </div>
+      <label class="bkpauto" id="lbkpauto" title="Ao abrir o CRM pela primeira vez no dia, salva sozinho uma cópia na pasta Downloads">
+        <input type="checkbox" id="ckbkpauto"> Backup automático diário
+      </label>
+      <button class="sb" id="btnexp"><span class="ic">📤</span> Exportar situações (CSV)</button>
+      <div class="sidenota" id="rodape">—</div>
+    </div>
+  </aside>
+
+  <!-- ================= ÁREA PRINCIPAL ================= -->
+  <main class="main">
+
+    <header class="topo" id="topo">
+      <div class="topolinha">
+        <h2 id="titulo">Fila de hoje</h2>
+        <div class="topodata" id="hoje"></div>
+        <div class="topoacoes">
+          <div class="busca">
+            <span class="ic">🔍</span>
+            <input type="search" id="q" placeholder="Buscar — nome, telefone, bairro, endereço…" title="Atalho: tecla /">
+            <button class="xq" id="xq" hidden title="Limpar busca">✕</button>
+          </div>
+          <button class="bt" id="btnimp" title="Gera uma folha limpa com os clientes filtrados">🖨️ Lista do dia</button>
+          <button class="bt" id="btnexpv" title="Exportar os clientes que vencem num período — texto, PDF ou .txt">📤 Exportar</button>
+          <button class="bt" id="btncel" title="Gerar a lista dos clientes da tela para ligar pelo celular">📱 Lista p/ celular</button>
+          <button class="bt" id="btnmut" title="Mandar mensagem para todos os clientes filtrados, um atrás do outro">💬 Mutirão</button>
+          <button class="bt so-ic" id="btnkpi" title="Mostrar ou esconder os cartões de resumo">▴</button>
+        </div>
+        <button class="bt tema" id="tema" title="Alternar entre modo claro e escuro" aria-label="Alternar entre modo claro e escuro"><span class="ic-lua">🌙</span><span class="ic-sol">☀️</span></button>
+      </div>
+      <div class="kpis" id="kpis"></div>
+    </header>
+
+    <div class="corpo">
+
+      <!-- avisos: base de clientes velha, backup atrasado -->
+      <div class="avisos" id="avisos"></div>
+
+      <!-- ---------- VISTA: LISTA ---------- -->
+      <section class="vista on" id="v-lista">
+        <div class="vbar">
+        <div class="seg" role="group" aria-label="Forma de ver os clientes">
+          <button type="button" id="vmQ" title="Clientes em colunas por etapa">Quadro</button>
+          <button type="button" id="vmL" title="Clientes em lista, um embaixo do outro">Lista</button>
+        </div>
+      </div>
+      <details class="filtros" id="cxfiltros">
+          <summary><span>Filtros</span><span class="fresumo" id="fresumo"></span></summary>
+          <div class="fdentro">
+            <div class="flin">
+              <select id="tempo" title="Há quanto tempo venceu">
+                <option value="">Tempo de vencimento — todos</option>
+                <optgroup label="Já venceu">
+                  <option value="v30">Venceu há até 30 dias</option>
+                  <option value="v90">Venceu há 1 a 3 meses</option>
+                  <option value="v180">Venceu há 3 a 6 meses</option>
+                  <option value="v365">Venceu há 6 meses a 1 ano</option>
+                  <option value="v365+">Venceu há mais de 1 ano</option>
+                  <option value="v730+">Venceu há mais de 2 anos</option>
+                </optgroup>
+                <optgroup label="Ainda vai vencer">
+                  <option value="a30">Vence nos próximos 30 dias</option>
+                  <option value="a60">Vence nos próximos 60 dias</option>
+                  <option value="a90">Vence nos próximos 90 dias</option>
+                </optgroup>
+              </select>
+              <select id="mes" title="Mês do vencimento"></select>
+              <select id="loc"></select>
+              <select id="prod"></select>
+              <button class="limpar" id="limpar">Limpar filtros</button>
+            </div>
+            <div class="flin baixo">
+              <div class="chips" id="tipos"></div>
+            </div>
+          </div>
+        </details>
+        <div class="conta" id="conta"></div>
+        <div class="aviso" id="aviso"></div>
+        <div id="lista"></div>
+      </section>
+
+      <!-- ---------- VISTA: AGENDAMENTOS DE SERVIÇO ---------- -->
+      <section class="vista" id="v-servicos">
+        <div class="svgrade">
+          <div class="svcol">
+            <div class="agtopo">
+              <h3 id="svmes"></h3>
+              <div class="agnav">
+                <button data-sv="-1" title="Mês anterior">‹</button>
+                <button data-sv="0" title="Voltar para hoje">•</button>
+                <button data-sv="1" title="Próximo mês">›</button>
+              </div>
+              <button class="bt" id="btnexpag" title="Exportar os agendamentos de um período — texto, PDF ou .txt">📤 Exportar</button>
+              <button class="bt pri" id="btnovo">＋ Novo agendamento</button>
+            </div>
+            <div class="cal" id="svcal"></div>
+            <div id="svlista"></div>
+          </div>
+          <aside class="svlado">
+            <div class="ladorot">Arraste um cliente para um dia do calendário</div>
+            <div class="ladobusca">
+              <input type="search" id="qsv" placeholder="Procurar cliente na base…">
+            </div>
+            <div id="svfila" class="svfila"></div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ---------- VISTA: TROCAS FEITAS ---------- -->
+      <section class="vista" id="v-trocas">
+        <div id="trocas"></div>
+      </section>
+
+      <!-- ---------- VISTA: PAINEL ---------- -->
+      <section class="vista" id="v-painel">
+        <div class="paineis" id="paineis"></div>
+      </section>
+
+      <!-- ---------- VISTA: RETORNOS ---------- -->
+      <section class="vista" id="v-agenda">
+        <div id="agenda"></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- janela flutuante (agendamento, troca, prompt) -->
+<div class="fundo" id="fundo" hidden><div class="modal" id="modal"></div></div>
+
+<!-- folha de impressão (só aparece ao imprimir) -->
+<div id="folha"></div>
+
+<!-- avisos flutuantes -->
+<div class="toasts" id="toasts"></div>
+
+<!-- seletores de arquivo, escondidos -->
+<input type="file" id="arq"    accept=".xlsx,.xlsm" hidden>
+<!-- id="arqct" (importar contatos das abas mensais antigas) foi removido em 31/08/2026 —
+     as abas mensais deixaram de ser preenchidas; o CRM guarda os contatos sozinho. -->
+<input type="file" id="arqbkp" accept=".json" hidden>
+
+<!-- O retrato da base de 25/08 (dados-iniciais.js, 517 KB) só é lido quando o
+     navegador ainda não tem clientes guardados. Com a base já guardada, o CRM
+     abre direto nela — mais rápido. O leitor de planilhas (sheetjs.js) é
+     carregado pelo app.js só quando precisa. -->
+<script>
+var GERADO="2026-10-29";
+(function(){
+  var tem=false;
+  try{tem=!!localStorage.getItem('crm_demo_base')&&!!localStorage.getItem('crm_demo_ct')}catch(e){}
+  if(!tem){document.write('<script src="js/dados-iniciais.js"><\/script>')}
+  else{window.__semIniciais=true;window.DADOS=[];window.CONTATOS={c:[],s:[]};window.BASEDATA=GERADO;window.CTDATA=GERADO}
+})();
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
